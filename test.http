@@ -1,0 +1,7 @@
+@server=http://localhost:3000
+
+###
+GET {{server}}/sub/list/22
+
+###
+GET {{server}}/code/list/22/11

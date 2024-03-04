@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+  <select id="legalCode" name="legalCode" data-city-code="{{cityCode}}" data-sub-code="{{subCode}}">
+    <option value="">전체</option>
+    {{#each codeList}}
+    <option value="{{this.fullCode}}">{{this.name}}</option>
+    {{/each}}
+  </select>
+</body>
+
+</html>
