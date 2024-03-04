@@ -7,8 +7,8 @@ let map;
 function createMap() {
   const container = document.getElementById('map');
   const options = {
-    center: new kakao.maps.LatLng(33.988746516623024, 126.92181392275747),
-    level: 12
+    center: new kakao.maps.LatLng(37.5642135, 127.0016985),
+    level: 13
   };
   return new kakao.maps.Map(container, options);
 }
@@ -19,6 +19,8 @@ async function displayAreaLine() {
 
   const data = await ajaxHelper.get('http://localhost:3000/data/city.json');
   const coordGroupList = data.features;
+
+  mapApi.remove.all();
   data.features
     .filter(e => e.properties.gid.startsWith(`${cityCode}${subCode}`))
     .map(e => e.geometry.coordinates).forEach((e, i) => {
