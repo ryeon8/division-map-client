@@ -9,7 +9,6 @@ export class AppController {
   @Get()
   @Render('index')
   index(): any {
-    console.log(this.service.getCityCodeList())
     return {
       apiKey: process.env.KAKAO_MAP_API_KEY,
       cityCodeList: this.service.getCityCodeList()
@@ -25,14 +24,30 @@ export class AppController {
     }
   }
 
-  @Get('/code/list/:cityCode/:subCode')
-  @Render('codeList')
-  codeList(@Param('cityCode') cityCode: string, @Param('subCode') subCode: string) {
+  @Get('/sub2/list/:cityCode/:subCode')
+  @Render('sub2List')
+  sub2List(@Param('cityCode') cityCode: string, @Param('subCode') subCode: string) {
     return {
       cityCode: cityCode,
       subCode: subCode,
-      codeList: this.service.getCodeList(cityCode, subCode)
+      sub2CodeList: this.service.getSub2CodeList(cityCode, subCode)
     }
+  }
+
+  @Get('/code/list/:cityCode/:subCode/:sub2Code')
+  @Render('codeList')
+  codeList(@Param('cityCode') cityCode: string, @Param('subCode') subCode: string, @Param('sub2Code') sub2Code: string) {
+    return {
+      cityCode: cityCode,
+      subCode: subCode,
+      sub2Code: sub2Code,
+      codeList: this.service.getCodeList(cityCode, subCode, sub2Code)
+    }
+  }
+
+  @Get('/geo/json/name/list/:fullCodeLike')
+  geoJsonNameList(@Param('fullCodeLike') fullCodeLike: string) {
+    return this.service.getGeoJsonNameList(fullCodeLike);
   }
 
 }

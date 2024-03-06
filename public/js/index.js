@@ -16,6 +16,11 @@ function createMap() {
 async function displayAreaLine() {
   const cityCode = document.getElementById('cityCode').value;
   const subCode = document.getElementById('subCode')?.value || '';
+  const sub2Code = document.getElementById('sub2Code')?.value || '';
+  const code = document.getElementById('code')?.value || '';
+
+  const geoJsonNameList = await ajaxHelper.get(`/geo/json/name/list/${cityCode}${subCode}${sub2Code}${code}`, 'json');
+  console.log(geoJsonNameList)
 
   const data = await ajaxHelper.get('http://localhost:3000/data/city.json');
   const coordGroupList = data.features;
@@ -30,26 +35,35 @@ async function displayAreaLine() {
     });
 }
 
-async function displaySubCodeList() {
-  const subCodeListHtml = await ajaxHelper.get(`/sub/list/${this.value}`);
-  this.parentNode.querySelector('select:not([name=cityCode])')?.remove();
-
-  const $subCodeListEl = domParser.parseFromString(subCodeListHtml, 'text/html').body.childNodes[1];
-  this.parentNode.appendChild($subCodeListEl);
-
-  $subCodeListEl.onchange = displayCodeList;
-  // $subCodeListEl.dispatchEvent(new Event('change'));
-}
-
 async function displayCodeList() {
-  const codeListHtml = await ajaxHelper.get(`/code/list/${this.dataset.cityCode}/${this.value}`);
-  this.parentNode.querySelector('[name=legalCode]')?.remove();
+  const codeListHtml = await ajaxHelper.get(`/code/list/${this.dataset.cityCode}/${this.dataset.subCode}/${this.value}`);
+  this.parentNode.querySelector('[name=code]')?.remove();
 
   const $codeListEl = domParser.parseFromString(codeListHtml, 'text/html').body.childNodes[1];
   this.parentNode.appendChild($codeListEl);
 
   $codeListEl.onchange = displayAreaLine;
-  // $codeListEl.dispatchEvent(new Event('change'));
+}
+
+async function displaySub2CodeList() {
+  const sub2CodeListHtml = await ajaxHelper.get(`/sub2/list/${this.dataset.cityCode}/${this.value}`);
+  Array.from(this.parentNode.querySelectorAll('[name=sub2Code], [name=code]')).forEach(e => e.remove());
+
+  const $sub2CodeListEl = domParser.parseFromString(sub2CodeListHtml, 'text/html').body.childNodes[1];
+  this.parentNode.appendChild($sub2CodeListEl);
+
+  $sub2CodeListEl.onchange = displayCodeList;
+}
+
+async function displaySubCodeList() {
+  const subCodeListHtml = await ajaxHelper.get(`/sub/list/${this.value}`);
+  Array.from(this.parentNode.querySelectorAll('select:not([name=cityCode])')).forEach(e => e.remove());
+
+  const $subCodeListEl = domParser.parseFromString(subCodeListHtml, 'text/html').body.childNodes[1];
+  this.parentNode.appendChild($subCodeListEl);
+
+  $subCodeListEl.onchange = displaySub2CodeList;
+  // $subCodeListEl.dispatchEvent(new Event('change'));
 }
 
 window.onload = async function () {

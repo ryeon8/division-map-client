@@ -2,10 +2,10 @@
 <html>
 
 <body>
-  <select id="legalCode" name="legalCode" data-city-code="{{cityCode}}" data-sub-code="{{subCode}}">
-    <option value="">전체</option>
+  <select id="code" name="code" data-city-code="{{cityCode}}" data-sub-code="{{subCode}}" data-sub2-code="{{sub2Code}}">
+    <option value="">리 전체</option>
     {{#each codeList}}
-    <option value="{{this.fullCode}}">{{this.name}}</option>
+    <option value="{{this.code}}">{{this.name}}</option>
     {{/each}}
   </select>
 </body>

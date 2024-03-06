@@ -1,7 +1,10 @@
 @server=http://localhost:3000
 
-###
-GET {{server}}/sub/list/22
+### 대구광역시 군/구 목록
+GET {{server}}/sub/list/27
 
-###
-GET {{server}}/code/list/22/11
+### 대구광역시 중구 읍면동 목록
+GET {{server}}/sub2/list/27/110
+
+### 대구광역시 달성군 화원읍 리 목록
+GET {{server}}/code/list/27/710/250
