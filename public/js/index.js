@@ -19,20 +19,12 @@ async function displayAreaLine() {
   const sub2Code = document.getElementById('sub2Code')?.value || '';
   const code = document.getElementById('code')?.value || '';
 
-  const geoJsonNameList = await ajaxHelper.get(`/geo/json/name/list/${cityCode}${subCode}${sub2Code}${code}`, 'json');
-  console.log(geoJsonNameList)
-
-  const data = await ajaxHelper.get('http://localhost:3000/data/city.json');
-  const coordGroupList = data.features;
-
   mapApi.remove.all();
-  data.features
-    .filter(e => e.properties.gid.startsWith(`${cityCode}${subCode}`))
-    .map(e => e.geometry.coordinates).forEach((e, i) => {
-      e.forEach((latLngList, i) => {
-        mapApi.draw.line(map, latLngList[0]);
-      })
-    });
+  const geoJsonNameList = await ajaxHelper.get(`/geo/json/name/list/${cityCode}${subCode}${sub2Code}${code}`, 'json');
+  for (let filename of geoJsonNameList) {
+    const data = await ajaxHelper.get(`/data/${filename}`);
+    mapApi.draw.line(map, data.geometry.coordinates[0][0]);
+  }
 }
 
 async function displayCodeList() {
