@@ -1,0 +1,55 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.dmc-container {
+  padding: 20px 30px;
+}
+
+.dmc-container * {
+  border-radius: 4px;
+}
+
+.dmc-flex {
+  display: flex;
+  align-items: center;
+}
+
+.dmc-col {
+  justify-content: space-between;
+  padding: 10px;
+}
+
+.dmc-col.left {
+  width: 70%;
+}
+
+.list-disc {
+  margin-left: 20px;
+  list-style: disc !important;
+}
+
+.dmc-col.right {
+  width: 30%;
+}
+
+.dmc-select-list {
+  margin-top: 10px;
+}
+
+.dmc-select-list * {
+  margin-right: 10px;
+  padding: 7px;
+  border: 1px solid #c3c3c3;
+}
+
+.btn {
+  margin-top: 10px;
+  padding: 5px 12px;
+}
+
+.btn.primary {
+  color: #fff;
+  background-color: #cccbef !important;
+  border: 1px solid #cccbef !important;
+}
