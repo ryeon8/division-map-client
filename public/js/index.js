@@ -13,14 +13,46 @@ function createMap() {
   return new kakao.maps.Map(container, options);
 }
 
+function getOptionText($el) {
+  if ($el) {
+    const text = $el.options[$el.selectedIndex].text;
+    return text.includes('전체') ? '' : text.trim();
+  }
+
+  return '';
+}
+
+function areaname() {
+  const cityname = getOptionText(document.getElementById('cityCode'));
+  const subname = getOptionText(document.getElementById('subCode'));
+  const sub2name = getOptionText(document.getElementById('sub2Code'));
+
+  return [cityname, subname, sub2name].join(' ');
+}
+
+function mapLevel(cityCode, subCode, sub2Code) {
+  if (sub2Code) {
+    return document.getElementById('sub2Code').dataset.mapLevel;
+  } else if (subCode) {
+    return document.getElementById('subCode').dataset.mapLevel;
+  } else {
+    return document.getElementById('cityCode').dataset.mapLevel;
+  }
+}
+
 async function displayAreaLine() {
   const cityCode = document.getElementById('cityCode').value;
   const subCode = document.getElementById('subCode')?.value || '';
   const sub2Code = document.getElementById('sub2Code')?.value || '';
-  const code = document.getElementById('code')?.value || '';
 
+  // 지도 확대 레벨 및 중앙 좌표 변경.
+  map.setLevel(mapLevel(cityCode, subCode, sub2Code));
+  const center = await mapApi.search.byKeyword(areaname());
+  map.setCenter(center);
+
+  // 경계선 표시.
   mapApi.remove.all();
-  const geoJsonNameList = await ajaxHelper.get(`/geo/json/name/list/${cityCode}${subCode}${sub2Code}${code}`, 'json');
+  const geoJsonNameList = await ajaxHelper.get(`/geo/json/name/list/${cityCode}${subCode}${sub2Code}`, 'json');
   for (let filename of geoJsonNameList) {
     const data = await ajaxHelper.get(`/data/${filename}`);
     mapApi.draw.line(map, data.geometry.coordinates[0][0]);

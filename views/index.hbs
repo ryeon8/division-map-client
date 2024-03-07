@@ -14,7 +14,7 @@
         <h1 class="text-3xl font-bold">대한민국 행정구역</h1>
         <div class="dmc-flex">
           <div class="dmc-select-list">
-            <select id="cityCode" name="cityCode">
+            <select id="cityCode" name="cityCode" data-map-level="10">
               {{#each cityCodeList}}
               <option value="{{this.cityCode}}">{{this.name}}</option>
               {{/each}}
