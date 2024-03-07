@@ -33,4 +33,29 @@ const draw = {
   }
 }
 
-export { draw, remove }
+const geocoder = new kakao.maps.services.Geocoder();
+const ps = new kakao.maps.services.Places();
+const search = {
+  byAddress: (addr) => {
+    if (addr) {
+      geocoder.addressSearch(addr, function (result, status) {
+        if (status === kakao.maps.services.Status.OK) {
+          return new kakao.maps.LatLng(result[0].y, result[0].x);
+        }
+      });
+    }
+  }, byKeyword: async (keyword) => {
+    return await new Promise((resolve, reject) => {
+      ps.keywordSearch(keyword, function placesSearchCB(data, status) {
+        if (status === kakao.maps.services.Status.OK) {
+          const latLng = new kakao.maps.LatLng(data[0].y, data[0].x);
+          resolve(latLng);
+        } else {
+          reject(status);
+        }
+      });
+    })
+  }
+}
+
+export { draw, remove, search }
