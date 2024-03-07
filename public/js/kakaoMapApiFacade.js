@@ -22,7 +22,7 @@ const draw = {
     const path = latLngList.map(latLngPair => new kakao.maps.LatLng(latLngPair[1], latLngPair[0]));
     const polyline = new kakao.maps.Polyline({
       path: path,
-      strokeWeight: 3,
+      strokeWeight: 2,
       strokeColor: 'blue',
       strokeOpacity: 1,
       strokeStyle: 'solid'
