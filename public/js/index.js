@@ -44,7 +44,7 @@ async function displaySub2CodeList() {
   const $sub2CodeListEl = domParser.parseFromString(sub2CodeListHtml, 'text/html').body.childNodes[1];
   this.parentNode.appendChild($sub2CodeListEl);
 
-  $sub2CodeListEl.onchange = displayCodeList;
+  // $sub2CodeListEl.onchange = displayCodeList;
 }
 
 async function displaySubCodeList() {
