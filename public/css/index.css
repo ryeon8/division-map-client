@@ -54,3 +54,7 @@
   background-color: #a3d6eb !important;
   border: 1px solid #a3d6eb !important;
 }
+
+select {
+  width: 150px;
+}
