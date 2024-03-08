@@ -1,10 +1,16 @@
+/**
+ * index.js. 사이트에서 제공하는 대부분의 front-service를 담당.
+ * 
+ * @author r3n
+ * @since 2024. 03. 08.
+ */
 import * as mapApi from './kakaoMapApiFacade.js';
 import ajaxHelper from './ajaxHelper.js';
 
 const domParser = new DOMParser();
 let map;
 
-function createMap() {
+function createKakaoMap() {
   const container = document.getElementById('map');
   const options = {
     center: new kakao.maps.LatLng(36.3891245329566, 127.705321271931),
@@ -13,6 +19,12 @@ function createMap() {
   return new kakao.maps.Map(container, options);
 }
 
+/** 
+ * 현재 선택된 option의 text 반환. 
+ * 
+ * @param {HTMLElement} $el (선택) select 엘리먼트
+ * @return 현재 선택된 option의 text. 전체라는 문자열이 포함된 경우 유효하지 않은 값으로 보고 공백 문자열 반환.
+ */
 function getOptionText($el) {
   if ($el) {
     const text = $el.options[$el.selectedIndex].text;
@@ -22,6 +34,11 @@ function getOptionText($el) {
   return '';
 }
 
+/**
+ * 선택된 시군구읍면동명 조합 반환.
+ * 
+ * @returns 시 + 군/구 + 읍/면 명을 공백 문자(' ')로 연결해 반환. 만약 시 항목만 선택되어 있다면 시 항목명만 반환.
+ */
 function areaname() {
   const cityname = getOptionText(document.getElementById('cityCode'));
   const subname = getOptionText(document.getElementById('subCode'));
@@ -30,6 +47,14 @@ function areaname() {
   return [cityname, subname, sub2name].join(' ');
 }
 
+/**
+ * 선택된 시/군,구/읍,면 수준에 따른 맵 확대 레벨 조회.
+ * 
+ * @param {string} cityCode 시 코드
+ * @param {string} subCode 군/구 코드
+ * @param {string} sub2Code 읍/면 코드
+ * @returns 맵 확대 레벨.
+ */
 function mapLevel(cityCode, subCode, sub2Code) {
   if (sub2Code) {
     return document.getElementById('sub2Code').dataset.mapLevel;
@@ -40,6 +65,7 @@ function mapLevel(cityCode, subCode, sub2Code) {
   }
 }
 
+/** 선택된 법정동 경계선 표시 처리. */
 async function displayAreaLine() {
   const cityCode = document.getElementById('cityCode').value;
   const subCode = document.getElementById('subCode')?.value || '';
@@ -59,6 +85,11 @@ async function displayAreaLine() {
   }
 }
 
+/**
+ * 리 코드 select 항목 표시 처리.
+ * 
+ * @deprecated 리 단위 코드 목록은 노출하지 않도록 변경. 대체 함수 없음.
+ */
 async function displayCodeList() {
   const codeListHtml = await ajaxHelper.get(`/code/list/${this.dataset.cityCode}/${this.dataset.subCode}/${this.value}`);
   this.parentNode.querySelector('[name=code]')?.remove();
@@ -69,6 +100,7 @@ async function displayCodeList() {
   $codeListEl.onchange = displayAreaLine;
 }
 
+/** 읍/면 select 요소 생성 및 표시 처리. */
 async function displaySub2CodeList() {
   const sub2CodeListHtml = await ajaxHelper.get(`/sub2/list/${this.dataset.cityCode}/${this.value}`);
   Array.from(this.parentNode.querySelectorAll('[name=sub2Code], [name=code]')).forEach(e => e.remove());
@@ -79,6 +111,7 @@ async function displaySub2CodeList() {
   // $sub2CodeListEl.onchange = displayCodeList;
 }
 
+/** 군/구 select 요소 생성 및 표시 처리. */
 async function displaySubCodeList() {
   const subCodeListHtml = await ajaxHelper.get(`/sub/list/${this.value}`);
   Array.from(this.parentNode.querySelectorAll('select:not([name=cityCode])')).forEach(e => e.remove());
@@ -96,6 +129,6 @@ window.onload = async function () {
 
   document.getElementById('displayLineBtn').onclick = displayAreaLine;
 
-  map = createMap();
+  map = createKakaoMap();
 }
 
