@@ -16,7 +16,11 @@ function createKakaoMap() {
     center: new kakao.maps.LatLng(36.3891245329566, 127.705321271931),
     level: 12
   };
-  return new kakao.maps.Map(container, options);
+
+  const map = new kakao.maps.Map(container, options);
+  map.addControl(new kakao.maps.ZoomControl(), kakao.maps.ControlPosition.RIGHT);
+
+  return map;
 }
 
 /** 
