@@ -10,19 +10,6 @@ import ajaxHelper from './ajaxHelper.js';
 const domParser = new DOMParser();
 let map;
 
-function createKakaoMap() {
-  const container = document.getElementById('map');
-  const options = {
-    center: new kakao.maps.LatLng(36.3891245329566, 127.705321271931),
-    level: 12
-  };
-
-  const map = new kakao.maps.Map(container, options);
-  map.addControl(new kakao.maps.ZoomControl(), kakao.maps.ControlPosition.RIGHT);
-
-  return map;
-}
-
 /** 
  * 현재 선택된 option의 text 반환. 
  * 
@@ -133,6 +120,6 @@ window.onload = async function () {
 
   document.getElementById('displayLineBtn').onclick = displayAreaLine;
 
-  map = createKakaoMap();
+  map = mapApi.createKakaoMap();
 }
 

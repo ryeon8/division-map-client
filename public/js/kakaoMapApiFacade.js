@@ -7,6 +7,19 @@
 
 let objectsOnMap = []
 
+function createKakaoMap() {
+  const container = document.getElementById('map');
+  const options = {
+    center: new kakao.maps.LatLng(36.3891245329566, 127.705321271931),
+    level: 12
+  };
+
+  const map = new kakao.maps.Map(container, options);
+  map.addControl(new kakao.maps.ZoomControl(), kakao.maps.ControlPosition.RIGHT);
+
+  return map;
+}
+
 const remove = {
   all: () => {
     objectsOnMap.forEach(e => e.setMap(null));
@@ -58,4 +71,4 @@ const search = {
   }
 }
 
-export { draw, remove, search }
+export { createKakaoMap, draw, remove, search }
