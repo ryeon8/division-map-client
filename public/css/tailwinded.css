@@ -602,6 +602,10 @@ video {
   margin-right: 8px;
 }
 
+.dmc-col h1 {
+  margin-bottom: 10px;
+}
+
 .dmc-col.right {
   width: 30%;
 }
