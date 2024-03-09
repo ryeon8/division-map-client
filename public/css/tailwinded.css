@@ -592,6 +592,16 @@ video {
   list-style: disc !important;
 }
 
+.list-github {
+  list-style: none !important;
+  padding: 0;
+}
+
+.list-github li:before {
+  content: "\1F47E";
+  margin-right: 8px;
+}
+
 .dmc-col.right {
   width: 30%;
 }
