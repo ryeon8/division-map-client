@@ -11,7 +11,7 @@
   <div class="dmc-container">
     <div class="dmc-flex">
       <section class="dmc-col left">
-        <h1 class="text-3xl font-bold">대한민국 행정구역</h1>
+        <h1 class="text-3xl font-bold">대한민국 법정동 영역</h1>
         <div class="dmc-flex">
           <div class="dmc-select-list">
             <select id="cityCode" name="cityCode" data-map-level="10">
@@ -22,7 +22,10 @@
           </div>
           <button type="button" id="displayLineBtn" class="btn primary">경계선 보기</button>
         </div>
-        <div id="map" style="width:100%;height:700px;margin-top:10px"></div>
+        <div>
+          <div id="map" style="width:100%;height:700px;margin-top:10px"></div>
+          <div id="addrClicked" class="hAddr fade-in"></div>
+        </div>
       </section>
       <section class="dmc-col right">
         <div>

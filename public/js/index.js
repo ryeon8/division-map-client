@@ -58,6 +58,10 @@ function mapLevel(cityCode, subCode, sub2Code) {
 
 /** 선택된 법정동 경계선 표시 처리. */
 async function displayAreaLine() {
+  // 이전에 클릭된 좌표 주소 안내창 제거.
+  document.getElementById('addrClicked').classList.remove('active');
+
+  // 선택된 법정동 정보 조회.
   const cityCode = document.getElementById('cityCode').value;
   const subCode = document.getElementById('subCode')?.value || '';
   const sub2Code = document.getElementById('sub2Code')?.value || '';

@@ -74,11 +74,38 @@
   box-shadow: none;
 }
 
-
 select {
   width: 150px;
 }
 
 .ml-20 {
   margin-left: 20px;
+}
+
+.fade-in {
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.fade-in.active {
+  opacity: 1;
+}
+
+/* KAKAO */
+.hAddr {
+  position: absolute;
+  left: 50px;
+  top: 130px;
+  border-radius: 2px;
+  background: #fff;
+  background: rgba(255, 255, 255, 0.8);
+  z-index: 1;
+  padding: 10px 15px;
+  transition-duration: 0.3s;
+}
+
+#centerAddr {
+  display: block;
+  margin-top: 2px;
+  font-weight: normal;
 }
